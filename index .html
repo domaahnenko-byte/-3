@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Анімація кульки</title>
+  <style>
+    canvas {
+      background-color: #f0f0f0;
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="800" height="400"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let x = 0;
+    const amplitude = 100;
+    const frequency = 0.02;
+    const radius = 20;
+    const speed = 2;
+
+    const colors = ['red', 'blue', 'green', 'orange', 'purple', 'cyan'];
+    let colorIndex = 0;
+
+    function drawBall() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const y = canvas.height / 2 + amplitude * Math.sin(frequency * x);
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = colors[colorIndex];
+      ctx.fill();
+
+      x += speed;
+
+      if (x > canvas.width) {
+        x = 0;
+        colorIndex = (colorIndex + 1) % colors.length;
+      }
+
+      requestAnimationFrame(drawBall);
+    }
+
+    drawBall();
+  </script>
+</body>
+</html>
+
